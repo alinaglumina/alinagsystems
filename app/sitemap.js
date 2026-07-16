@@ -1,0 +1,12 @@
+import { site } from '@/lib/site';
+
+export default function sitemap() {
+  const routes = ['', '/services', '/about', '/contact'];
+  const now = new Date();
+  return routes.map((r) => ({
+    url: `${site.url}${r}`,
+    lastModified: now,
+    changeFrequency: r === '' ? 'weekly' : 'monthly',
+    priority: r === '' ? 1 : 0.8,
+  }));
+}

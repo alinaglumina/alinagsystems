@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: 'Space Grotesk';
+    --font-sans: 'Inter';
+    --font-mono: 'JetBrains Mono';
+    /* Light theme — cool off-white, ink navy text */
+    --canvas: 246 248 251;   /* #F6F8FB page */
+    --surface: 255 255 255;  /* cards */
+    --raised: 249 250 252;   /* subtle raised panels */
+    --line: 226 231 239;     /* borders */
+    --ink: 15 20 32;         /* primary text */
+    --muted: 82 92 112;      /* secondary text */
+    --faint: 128 138 158;    /* tertiary / captions */
+    --grid: 15 23 42;        /* blueprint grid stroke */
+  }
+  .dark {
+    --canvas: 10 12 18;      /* #0A0C12 obsidian */
+    --surface: 17 20 28;     /* #11141C */
+    --raised: 22 26 36;
+    --line: 32 38 52;
+    --ink: 233 237 245;
+    --muted: 152 163 184;
+    --faint: 110 121 143;
+    --grid: 148 163 200;
+    color-scheme: dark;
+  }
+
+  * { border-color: rgb(var(--line)); }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    background-color: rgb(var(--canvas));
+    color: rgb(var(--ink));
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+  ::selection { background: rgba(46,107,255,0.22); }
+
+  h1, h2, h3, h4 { font-family: var(--font-display), system-ui, sans-serif; letter-spacing: -0.02em; }
+
+  /* Accessible focus ring */
+  :focus-visible { outline: none; box-shadow: 0 0 0 2px rgb(var(--canvas)), 0 0 0 4px #2E6BFF; border-radius: 6px; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-container px-5 sm:px-8; }
+
+  /* Monospace technical eyebrow — the precision language */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-2xs uppercase tracking-[0.22em] text-muted;
+  }
+  .eyebrow::before {
+    content: ''; @apply h-1.5 w-1.5 rounded-full;
+    background: #35E0D8; box-shadow: 0 0 12px #35E0D8;
+  }
+
+  .gradient-text {
+    background: linear-gradient(115deg, #2E6BFF 0%, #7B61FF 60%, #35E0D8 120%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  /* Hairline blueprint grid background */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, rgb(var(--grid) / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--grid) / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-line bg-surface;
+    background-image: linear-gradient(180deg, rgb(var(--raised) / 0.5), transparent);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 focus-visible:outline-none disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-cobalt text-white hover:bg-cobalt-600 hover:shadow-glow px-5 py-2.5;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-surface/60 text-ink hover:border-cobalt/40 hover:bg-surface px-5 py-2.5 backdrop-blur;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
